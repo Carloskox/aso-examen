@@ -1,24 +1,22 @@
-# Importamos el módulo psutil, que nos permite obtener información del sistema
-import psutil
+import os
+def crear_carpetas_y_ficheros():
+    escritorio = '/home/carlos/Escritorio'  # Ruta al escritorio
 
+    # Iteramos 5 veces para crear 5 carpetas
+    for i in range(1, 6):
+        nombre_carpeta = f"folder{i}"
+        ruta_carpeta = os.path.join(escritorio, nombre_carpeta)
+        os.makedirs(ruta_carpeta, exist_ok=True)  # Creamos la carpeta
+        
+       # Dentro de cada carpeta, creamos 10 ficheros
+        for j in range(1, 11):
+            nombre_fichero = f"fichero{j}.txt"
+            contenido = f"Este es el contenido del fichero {j}"
+            ruta_fichero = os.path.join(ruta_carpeta, nombre_fichero)
 
-def obtener_porcentaje_uso():
- 
-    particiones = psutil.disk_partitions()
-    
-    # Iteramos sobre cada partición
-    for particion in particiones:
-        try:
-            # Obtenemos el espacio utilizado en la partición
-            espacio = psutil.disk_usage(particion.mountpoint)
-            # Calculamos el porcentaje de espacio ocupado en la partición
-            porcentaje = espacio.percent
-            # Mostramos el nombre de la partición y el porcentaje de espacio ocupado
-            print(f"{particion.device} {porcentaje:.1f}%")
-        except PermissionError:
-            # Ignoramos las particiones a las que no tenemos permiso de acceder
-            continue
+            # Escribimos el contenido en el fichero
+            with open(ruta_fichero, 'w') as f:
+                f.write(contenido)
 
-# Si el script es ejecutado directamente, llamamos a la función para obtener el porcentaje de uso
 if __name__ == "__main__":
-    obtener_porcentaje_uso()
+    crear_carpetas_y_ficheros() 
