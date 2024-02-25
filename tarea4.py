@@ -1,24 +1,24 @@
-# Importamos el módulo psutil, que nos permite obtener información del sistema
 import psutil
-
-
-def obtener_porcentaje_uso():
+import logging
+def analizar_espacio(particion="/"):
+    # Obtener el uso de la partición
+    espacio = psutil.disk_usage(particion)
+    porcentaje_ocupado = espacio.percent
  
-    particiones = psutil.disk_partitions()
-    
-    # Iteramos sobre cada partición
-    for particion in particiones:
-        try:
-            # Obtenemos el espacio utilizado en la partición
-            espacio = psutil.disk_usage(particion.mountpoint)
-            # Calculamos el porcentaje de espacio ocupado en la partición
-            porcentaje = espacio.percent
-            # Mostramos el nombre de la partición y el porcentaje de espacio ocupado
-            print(f"{particion.device} {porcentaje:.1f}%")
-        except PermissionError:
-            # Ignoramos las particiones a las que no tenemos permiso de acceder
-            continue
+    # Configurar el logging
+    logging.basicConfig(filename='/home/carlos/Escritorio/logs/espacio_2.log', level=logging.INFO,
+                        format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Si el script es ejecutado directamente, llamamos a la función para obtener el porcentaje de uso
+    # Determinar el nivel de logging según el porcentaje de espacio ocupado
+    if porcentaje_ocupado > 80:
+        logging.error(f"El espacio en la partición {particion} está por encima del 80% de uso.")
+    elif porcentaje_ocupado > 60:
+       logging.warning(f"El espacio en la partición {particion} está por encima del 60% y por debajo del 80% de uso.")
+    else:
+        logging.info(f"El espacio en la partición {particion} está por debajo del 60% de uso.")
+
 if __name__ == "__main__":
-    obtener_porcentaje_uso()
+
+    analizar_espacio() 
+
+
