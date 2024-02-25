@@ -1,11 +1,8 @@
-# Importamos el módulo psutil, que nos permite obtener información del sistema
 import psutil
 
-
 def obtener_porcentaje_uso():
- 
     particiones = psutil.disk_partitions()
-    
+ 
     # Iteramos sobre cada partición
     for particion in particiones:
         try:
@@ -20,5 +17,7 @@ def obtener_porcentaje_uso():
             continue
 
 # Si el script es ejecutado directamente, llamamos a la función para obtener el porcentaje de uso
+
 if __name__ == "__main__":
-    obtener_porcentaje_uso()
+
+    obtener_porcentaje_uso() 
