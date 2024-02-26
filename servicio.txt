@@ -1,0 +1,34 @@
+  GNU nano 6.2           /etc/systemd/system/espacio.service                    
+
+[Unit]
+
+Description=Servicio para analizar el espacio en la partición raíz
+
+After=network.target
+
+StartLimitIntervalSec=0
+
+
+
+[Service]
+
+Type=simple
+
+ExecStart=/usr/bin/python3 /home/carlos/Escritorio/tarea5.py
+
+Restart=always
+
+RestartSec=10
+
+User=root
+
+Environment=PYTHONPATH=/home/carlos/.local/lib/python3.10/site-packages
+
+
+
+[Install]
+
+WantedBy=multi-user.target
+
+
+
